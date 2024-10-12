@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -50,8 +51,13 @@ func main() {
 	http.HandleFunc("/", handler)
 	http.HandleFunc("/contactformsubmits", cors(handleContactFormSubmit))
 
-	log.Println("Server is starting on port 8080...")
-	if err := http.ListenAndServe(":8080", nil); err != nil {
+	port := os.Getenv("PORT") // Get the port from the environment variable
+	if port == "" {
+		port = "8080" // Fallback to 8080 if the variable is not set
+	}
+
+	log.Println("Server is starting on port", port)
+	if err := http.ListenAndServe(":"+port, nil); err != nil {
 		log.Fatal(err)
 	}
 }
