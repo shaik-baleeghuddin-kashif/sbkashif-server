@@ -68,13 +68,14 @@ func cors(next http.HandlerFunc) http.HandlerFunc {
 		allowedOrigins := map[string]bool{
 			"http://192.168.1.15:5173": true,
 			"https://www.sbkashif.com": true,
+			"https://sbkashif.com":     true,
 		}
 
 		origin := r.Header.Get("Origin")
 		if allowedOrigins[origin] {
-			w.Header().Set("Access-Control-Allow-Origin", origin)           // Allow specific origin
-			w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS") // Allow specific methods
-			w.Header().Set("Access-Control-Allow-Headers", "Content-Type")  // Allow specific headers
+			w.Header().Set("Access-Control-Allow-Origin", origin)
+			w.Header().Set("Access-Control-Allow-Methods", "POST, OPTIONS")
+			w.Header().Set("Access-Control-Allow-Headers", "Content-Type")
 		}
 
 		if r.Method == http.MethodOptions {
